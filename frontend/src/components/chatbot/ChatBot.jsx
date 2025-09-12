@@ -9,6 +9,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { VscChromeMinimize } from "react-icons/vsc";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useState } from "react";
+import axios from "axios";
 const ChatBot = () => {
   const [messages, setMessages] = useState([
     { sender: "bot", text: "How can I help you?" },
@@ -18,14 +19,32 @@ const ChatBot = () => {
 
   const sendMessage = async (text) => {
     setMessages([...messages, { sender: "user", text }]);
+    setInput("");
     setLoading(true);
-    setTimeout(() => {
+
+    try {
+      const chatbotResponse = await axios.post(
+        "http://localhost:5000/api/chat",
+        {
+          message: text,
+        }
+      );
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Here’s the reply from API!" },
+        { sender: "bot", text: chatbotResponse.data.reply },
       ]);
+    } catch (error) {
+      console.error(error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "⚠️ Sorry, something went wrong!",
+        },
+      ]);
+    } finally {
       setLoading(false);
-    }, 2000);
+    }
   };
   return (
     <div className="customer-chatbot">

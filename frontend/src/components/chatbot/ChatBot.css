@@ -85,6 +85,7 @@
 }
 .user-msg {
   background-color: rgb(188 195 255);
+  align-self: flex-end;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 .chatbot-icon {
