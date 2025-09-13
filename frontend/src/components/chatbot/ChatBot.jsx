@@ -42,7 +42,7 @@ const ChatBot = () => {
 
     try {
       const chatbotResponse = await axios.post(
-        `${import.meta.env.BACKEND_BASE_URL}/api/chat`,
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/api/chat`,
         {
           message: text,
         }
