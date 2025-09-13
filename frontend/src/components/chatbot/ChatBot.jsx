@@ -24,6 +24,7 @@ const ChatBot = () => {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -69,14 +70,23 @@ const ChatBot = () => {
   };
   return (
     <div className="customer-chatbot">
-      <div className="message-bubble">
+      <div
+        className="message-bubble"
+        style={{ display: isOpen ? "none" : "block" }}
+        onClick={() => setIsOpen(true)}
+      >
         <LuMessageCircleMore size={30} />
       </div>
-      <div className="chat-bot">
+
+      <div className={`chat-bot ${isOpen ? "open" : ""}`}>
         <div className="chatbot-head">
           <IoIosArrowRoundBack size={20} className="head-icon" />
           <h1>chat bot</h1>
-          <VscChromeMinimize size={20} className="head-icon" />
+          <VscChromeMinimize
+            size={20}
+            className="head-icon"
+            onClick={() => setIsOpen(false)}
+          />
         </div>
         <div className="chatbot-msg-ui">
           {messages.map((msg, index) => (

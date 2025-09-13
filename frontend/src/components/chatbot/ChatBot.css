@@ -1,5 +1,8 @@
 .customer-chatbot {
-  position: relative;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
   max-width: 550px;
   height: 650px;
   margin: 0 auto;
@@ -8,24 +11,41 @@
   background-color: rgb(129, 125, 247);
   padding: 20px;
   color: white;
-  position: absolute;
-  bottom: 0;
-  right: 0px;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
   border-radius: 100px;
+  cursor: pointer;
+  z-index: 1000;
+}
+.message-bubble:active {
+  transform: scale(0.95);
 }
 .chat-bot {
-  background-color: #f8f8f8;
-  padding: 10px;
-  max-width: 450px;
-  height: 100%;
-  margin: 0 auto;
   display: grid;
   grid-template-rows: 50px 1fr 70px;
   gap: 10px;
+  background-color: #f8f8f8;
+  padding: 10px;
+  width: 450px; /* fixed width */
+  height: 600px;
+  margin: 0 auto;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  /* tranisition */
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease-in-out;
 }
-
+.chat-bot.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
 .chatbot-head {
   display: flex;
   justify-content: space-between;
