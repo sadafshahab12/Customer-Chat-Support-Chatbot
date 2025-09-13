@@ -14,6 +14,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { getRelativeTime } from "../../functions/date.js";
+import { adjustTextareaHeight } from "../../functions/textarea-height.js";
 const ChatBot = () => {
   const [messages, setMessages] = useState([
     {
@@ -25,7 +26,15 @@ const ChatBot = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      adjustTextareaHeight(textareaRef.current, setIsExpanded);
+    }
+  }, [input]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -37,7 +46,7 @@ const ChatBot = () => {
       text,
       time: new Date(),
     };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
@@ -104,7 +113,11 @@ const ChatBot = () => {
               <p className={msg.sender === "bot" ? "chat-bot-msg" : "user-msg"}>
                 {msg.text}
               </p>
-              <p className="chatbot-date">
+              <p
+                className={` ${
+                  msg.sender === "bot" ? "chatbot-date" : "user-date"
+                } `}
+              >
                 <GoClock size={12} />
                 {getRelativeTime(msg.time)}
               </p>
@@ -123,13 +136,14 @@ const ChatBot = () => {
           <div className="chatbot-input">
             <CiCirclePlus className="plus-icon" size={30} />
 
-            <input
+            <textarea
+              ref={textareaRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter Your Message Here ..."
-              className="user-msg-input"
-            />
+              className={`user-msg-input ${isExpanded ? "expanded" : ""}`}
+            ></textarea>
             <BsEmojiSmile size={26} className="emoji-icon" />
           </div>
           <button
