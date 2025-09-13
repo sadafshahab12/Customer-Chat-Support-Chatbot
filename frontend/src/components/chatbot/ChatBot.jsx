@@ -1,38 +1,58 @@
-import { LuMessageCircleMore } from "react-icons/lu";
 import "./ChatBot.css";
 import "./TypingIndicator.css";
-import { FaUser } from "react-icons/fa";
-import { RiRobot2Line } from "react-icons/ri";
-import { GoArrowUp, GoClock } from "react-icons/go";
-import { BsEmojiSmile } from "react-icons/bs";
-import { CiCirclePlus } from "react-icons/ci";
-import { VscChromeMinimize } from "react-icons/vsc";
-import { IoIosArrowRoundBack } from "react-icons/io";
-import { useState } from "react";
+import {
+  BsEmojiSmile,
+  CiCirclePlus,
+  FaUser,
+  GoArrowUp,
+  GoClock,
+  IoIosArrowRoundBack,
+  LuMessageCircleMore,
+  RiRobot2Line,
+  VscChromeMinimize,
+} from "../../exports/icons.js";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { getRelativeTime } from "../../functions/date.js";
 const ChatBot = () => {
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "How can I help you?" },
+    {
+      sender: "bot",
+      text: "How can I help you?",
+      time: new Date(),
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
   const sendMessage = async (text) => {
-    setMessages([...messages, { sender: "user", text }]);
+    const userMessage = {
+      sender: "user",
+      text,
+      time: new Date(),
+    };
+    setMessages([...messages, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
       const chatbotResponse = await axios.post(
-        "http://localhost:5000/api/chat",
+        `${import.meta.env.BACKEND_BASE_URL}/api/chat`,
         {
           message: text,
         }
       );
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: chatbotResponse.data.reply },
-      ]);
+      const botMessage = {
+        sender: "bot",
+        text: chatbotResponse.data.reply,
+        time: new Date(),
+      };
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error(error);
       setMessages((prev) => [
@@ -40,6 +60,7 @@ const ChatBot = () => {
         {
           sender: "bot",
           text: "⚠️ Sorry, something went wrong!",
+          time: new Date(),
         },
       ]);
     } finally {
@@ -62,6 +83,7 @@ const ChatBot = () => {
             <div
               key={index}
               className={msg.sender === "bot" ? "chatbot-msg-part" : "user"}
+              ref={index === messages.length - 1 ? messagesEndRef : null}
             >
               {msg.sender === "bot" ? (
                 <RiRobot2Line size={40} className="chatbot-icon" />
@@ -74,10 +96,7 @@ const ChatBot = () => {
               </p>
               <p className="chatbot-date">
                 <GoClock size={12} />
-                {new Date().toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+                {getRelativeTime(msg.time)}
               </p>
             </div>
           ))}

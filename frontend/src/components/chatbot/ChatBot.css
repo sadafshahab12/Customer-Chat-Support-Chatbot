@@ -17,7 +17,7 @@
   background-color: #f8f8f8;
   padding: 10px;
   max-width: 450px;
-  min-height: 600px;
+  height: 600px;
   margin: 0 auto;
   display: grid;
   grid-template-rows: 50px 1fr 70px;
@@ -52,8 +52,18 @@
 .chatbot-msg-ui {
   display: flex;
   flex-direction: column;
-  justify-content: end;
   gap: 10px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 10px 5px;
+  max-height: 480px;
+}
+.chatbot-msg-ui::-webkit-scrollbar {
+  width: 6px;
+}
+.chatbot-msg-ui::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 .chatbot-msg-part {
   padding: 10px;
