@@ -1,0 +1,129 @@
+form {
+  padding: 30px;
+  border: 1px solid black;
+  background-color: #f1efef;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 720px;
+}
+.form-head {
+  font-weight: 600;
+}
+.chatbot-basic-info-head,
+.chatbot-theme-head,
+.optional-features-head {
+  margin-bottom: 15px;
+  font-size: 12px;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  width: max-content;
+  height: max-content;
+  word-spacing: 2px;
+}
+.chatbot-basic-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.chatbot-theme {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 5px;
+  row-gap: 30px;
+}
+.chatbot-basic-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.chatbot-theme div {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  align-items: center;
+  gap: 5px;
+}
+.chatbot-theme div .desc-field{
+    grid-column: 1/3;
+}
+.chatbot-basic-info div input {
+  padding: 14px 20px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  font-size: 15px;
+  outline: none;
+}
+.optional-features {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.optional-features div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+.optional-features div .desc-field {
+  grid-column: 1/3;
+}
+.desc-field {
+  color: rgb(76, 74, 74);
+  font-weight: 300;
+}
+form label {
+  font-size: 16px;
+}
+label[for="chatbot-icon"] {
+  border: 1px dashed #333;
+  padding: 20px 40px;
+  cursor: pointer;
+}
+label[for="logo"] {
+  border: 1px dashed #333;
+  padding: 20px 40px;
+  cursor: pointer;
+}
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+input[type="color"]::webkit-color-swatch-wrapper {
+  border-radius: 100px;
+  border: none;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 100px;
+  height: 25px;
+  width: 30px;
+  border: none;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: #333;
+
+  font-size: 16px;
+  position: absolute;
+  top: 3px;
+  left: 6px;
+}

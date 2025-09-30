@@ -7,4 +7,5 @@ export { GoArrowUp, GoClock } from "react-icons/go";
 export { BsEmojiSmile } from "react-icons/bs";
 export { CiCirclePlus } from "react-icons/ci";
 export { VscChromeMinimize } from "react-icons/vsc";
+export { IoMdSettings } from "react-icons/io";
 export { IoIosArrowRoundBack } from "react-icons/io";
